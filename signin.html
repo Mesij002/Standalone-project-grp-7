@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In | SpendWise</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 16px;
+      background: #f8fafc;
+      color: #172033;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      padding: 38px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 55px rgba(15, 23, 42, 0.07);
+    }
+
+    .auth-logo {
+      display: inline-block;
+      margin-bottom: 28px;
+      color: #16a36a;
+      font-size: 25px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .auth-card h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .auth-subtitle {
+      margin: 0 0 28px;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .auth-field label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .auth-field input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font: inherit;
+      outline: none;
+    }
+
+    .auth-field input:focus {
+      border-color: #16a36a;
+      box-shadow: 0 0 0 3px rgba(22, 163, 106, 0.12);
+    }
+
+    .auth-submit {
+      width: 100%;
+      padding: 14px;
+      margin-top: 4px;
+      border: none;
+      border-radius: 9px;
+      background: #16a36a;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-submit:hover {
+      background: #128455;
+    }
+
+    .auth-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .auth-message {
+      display: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .auth-message.visible {
+      display: block;
+    }
+
+    .auth-message.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .auth-message.success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .auth-switch {
+      margin-top: 24px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .auth-switch a,
+    .auth-forgot {
+      color: #168454;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .auth-forgot {
+      align-self: flex-end;
+      margin-top: -8px;
+      font-size: 13px;
+    }
+
+    .auth-back {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 26px 20px;
+      }
+    }
+  </style>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    defer
+  ></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="auth.js" defer></script>
+</head>
+
+<body class="auth-page">
+  <main class="auth-card">
+    <a href="index.html" class="auth-logo">SpendWise.</a>
+
+    <h1>Welcome back!</h1>
+    <p class="auth-subtitle">
+      Log in to check your balance, manage your budget, and keep
+      moving towards your savings goals.
+    </p>
+
+    <form id="signin-form" class="auth-form">
+      <div class="auth-field">
+        <label for="signin-email">Email address</label>
+        <input
+          type="email"
+          id="signin-email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="auth-field">
+        <label for="signin-password">Password</label>
+        <input
+          type="password"
+          id="signin-password"
+          name="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <a href="#" id="forgot-password" class="auth-forgot">
+        Forgot password?
+      </a>
+
+      <div
+        id="signin-message"
+        class="auth-message"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <button type="submit" id="signin-button" class="auth-submit">
+        Log In
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      New to SpendWise?
+      <a href="signup.html">Create an account</a>
+    </p>
+
+    <a href="index.html" class="auth-back">← Back to home</a>
+  </main>
+</body>
+</html>

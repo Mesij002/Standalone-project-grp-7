@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SpendWise helps you track expenses, manage budgets, and reach your savings goals.">
+  <title>SpendWise — Take Control of Your Money</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .landing-page {
+      min-height: 100vh;
+      background: #f8fafc;
+      color: #172033;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .landing-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 7%;
+      background: white;
+    }
+
+    .landing-logo {
+      font-size: 25px;
+      font-weight: 800;
+      color: #16a36a;
+      text-decoration: none;
+    }
+
+    .landing-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .landing-nav-links a {
+      color: #475569;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .landing-button {
+      display: inline-block;
+      padding: 13px 22px;
+      border-radius: 9px;
+      background: #16a36a;
+      color: white !important;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid #16a36a;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .landing-button:hover {
+      background: #128455;
+      transform: translateY(-2px);
+    }
+
+    .landing-button.secondary {
+      background: white;
+      color: #16a36a !important;
+    }
+
+    .landing-hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 50px;
+      max-width: 1200px;
+      margin: auto;
+      padding: 90px 7%;
+    }
+
+    .landing-badge {
+      display: inline-block;
+      padding: 8px 13px;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .landing-hero h1 {
+      margin: 22px 0;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+
+    .landing-hero h1 span {
+      color: #16a36a;
+    }
+
+    .landing-description {
+      max-width: 520px;
+      color: #64748b;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .landing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .landing-note {
+      margin-top: 18px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .landing-preview {
+      padding: 26px;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    .preview-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .preview-heading p {
+      margin: 5px 0 0;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .preview-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #dcfce7;
+      font-size: 23px;
+    }
+
+    .preview-balance {
+      padding: 23px;
+      border-radius: 15px;
+      background: #102b22;
+      color: white;
+    }
+
+    .preview-balance p {
+      margin: 0;
+      color: #bbd7cb;
+      font-size: 14px;
+    }
+
+    .preview-balance h2 {
+      margin: 12px 0;
+      font-size: 32px;
+    }
+
+    .preview-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .preview-stat {
+      padding: 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+    }
+
+    .preview-stat p {
+      margin: 0 0 10px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .preview-stat strong {
+      font-size: 20px;
+    }
+
+    .landing-features {
+      padding: 75px 7%;
+      background: white;
+      text-align: center;
+    }
+
+    .landing-features h2 {
+      margin-bottom: 12px;
+      font-size: 34px;
+    }
+
+    .landing-features > p {
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 1100px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+
+    .feature-card {
+      padding: 26px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+    }
+
+    .feature-card .feature-icon {
+      font-size: 27px;
+    }
+
+    .feature-card h3 {
+      margin: 18px 0 10px;
+    }
+
+    .feature-card p {
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .landing-footer {
+      padding: 26px 7%;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      .landing-hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 60px;
+      }
+
+      .landing-hero h1 {
+        letter-spacing: -1px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .landing-nav {
+        padding: 20px 5%;
+      }
+
+      .landing-logo {
+        font-size: 21px;
+      }
+
+      .landing-nav-links {
+        gap: 12px;
+      }
+
+      .landing-nav-links a {
+        font-size: 13px;
+      }
+
+      .landing-nav .landing-button {
+        padding: 10px 12px;
+      }
+
+      .landing-hero {
+        padding: 50px 5%;
+      }
+
+      .landing-preview {
+        padding: 18px;
+      }
+
+      .landing-features {
+        padding: 55px 5%;
+      }
+    }
+
+    .landing-features {
+  padding: 90px 7%;
+  background: #ffffff;
+  text-align: center;
+}
+
+.section-label {
+  display: inline-block;
+  color: #168454;
+  background: #dcfce7;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.landing-features h2,
+.how-it-works h2 {
+  margin: 18px 0 12px;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: -1px;
+}
+
+.section-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #64748b;
+  line-height: 1.8;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1100px;
+  margin: 45px auto 0;
+  text-align: left;
+}
+
+.feature-card {
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.07);
+}
+
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #dcfce7;
+  font-size: 25px;
+}
+
+.feature-card h3 {
+  margin: 22px 0 10px;
+  font-size: 19px;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* HOW IT WORKS SECTION */
+.how-it-works {
+  padding: 90px 7%;
+  background: #f8fafc;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 50px auto 0;
+  text-align: left;
+}
+
+.step-card {
+  position: relative;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.step-number {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #16a36a;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.step-card h3 {
+  margin: 24px 0 10px;
+  font-size: 19px;
+}
+
+.step-card p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.how-it-works-cta {
+  margin-top: 42px;
+}
+
+@media (max-width: 800px) {
+  .feature-grid,
+  .steps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .landing-nav-links a[href="#how-it-works"] {
+    display: none;
+  }
+
+  .feature-grid,
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-features,
+  .how-it-works {
+    padding: 65px 5%;
+  }
+
+  .feature-card,
+  .step-card {
+    padding: 24px;
+  }
+}
+  </style>
+</head>
+
+<body class="landing-page">
+
+  <header class="landing-nav">
+    <a href="index.html" class="landing-logo">SpendWise.</a>
+
+    
+<nav class="landing-nav-links" aria-label="Main navigation">
+  <a href="#features">Features</a>
+  <a href="#how-it-works">How It Works</a>
+  <a href="signin.html" data-auth-link="login">Log in</a>
+  <a href="signup.html" data-auth-link="cta" class="landing-button">Get Started</a>
+</nav>
+
+  </header>
+
+  <main>
+    <section class="landing-hero">
+      <div>
+        <span class="landing-badge">Your money, your control</span>
+
+        <h1>
+          Make smarter money moves.
+          <span>Every day.</span>
+        </h1>
+
+        <p class="landing-description">
+          Take control of your finances with one simple dashboard.
+          Track your income, understand your spending, manage your
+          budgets, and work towards the things you want.
+        </p>
+
+        <div class="landing-actions">
+          <a href="signup.html" data-auth-link="cta" class="landing-button">
+            Get Started Free →
+          </a>
+
+          <a href="signin.html" class="landing-button secondary">
+            I have an account
+          </a>
+        </div>
+
+        <p class="landing-note">
+          Start organizing your finances in one place.
+        </p>
+      </div>
+
+      <div class="landing-preview">
+        <div class="preview-heading">
+          <div>
+            <strong>Your financial overview</strong>
+            <p>A preview of your money dashboard</p>
+          </div>
+          <div class="preview-icon">↗</div>
+        </div>
+
+        <div class="preview-balance">
+          <p>Available balance</p>
+          <h2>₦245,800.00</h2>
+          <p>Example figures — not your actual account balance</p>
+        </div>
+
+        <div class="preview-stats">
+          <div class="preview-stat">
+            <p>↗ Total income</p>
+            <strong>₦320,000</strong>
+          </div>
+
+          <div class="preview-stat">
+            <p>↘ Total expenses</p>
+            <strong>₦74,200</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   <section class="landing-features" id="features">
+  <span class="section-label">Features</span>
+
+  <h2>Everything you need to spend wisely</h2>
+
+  <p class="section-description">
+    Your money deserves a plan. SpendWise gives you the tools to
+    understand your spending, stay organized, and make confident
+    financial decisions.
+  </p>
+
+  <div class="feature-grid">
+    <article class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Transaction Tracking</h3>
+      <p>
+        Record your income and expenses, categorize transactions,
+        and understand where your money goes.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Savings Goals</h3>
+      <p>
+        Set personal savings targets, add contributions, and monitor
+        your progress as you work towards your goals.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">💚</div>
+      <h3>Smart Budgeting</h3>
+      <p>
+        Set monthly limits for different categories and track how
+        much you've spent and how much remains.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🔎</div>
+      <h3>Spending Insights</h3>
+      <p>
+        Search and filter your transactions to find the details
+        you need and better understand your habits.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Private Accounts</h3>
+      <p>
+        Sign in to your own account, with access controls designed
+        to keep each user's financial records separate.
+      </p>
+    </article>
+
+    <article class="feature-card">
+      <div class="feature-icon">📱</div>
+      <h3>Simple Dashboard</h3>
+      <p>
+        View your financial summary, transactions, budgets, and
+        savings goals together in one organized place.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="how-it-works" id="how-it-works">
+  <span class="section-label">How it works</span>
+
+  <h2>Three steps to better money habits</h2>
+
+  <p class="section-description">
+    Getting started is simple. Create your account and build a
+    clearer picture of your finances, one step at a time.
+  </p>
+
+  <div class="steps-grid">
+    <article class="step-card">
+      <div class="step-number">01</div>
+      <h3>Create your account</h3>
+      <p>
+        Sign up with your name, email, and password to get your
+        own SpendWise account.
+      </p>
+    </article>
+
+    <article class="step-card">
+      <div class="step-number">02</div>
+      <h3>Organize your money</h3>
+      <p>
+        Add your income and expenses, set monthly budgets, and
+        create savings goals that matter to you.
+      </p>
+    </article>
+
+    <article class="step-card">
+      <div class="step-number">03</div>
+      <h3>Track your progress</h3>
+      <p>
+        Return to your dashboard to review your balance, monitor
+        spending, and see how your savings are progressing.
+      </p>
+    </article>
+  </div>
+
+  <div class="how-it-works-cta">
+    <a href="signup.html" data-auth-link="cta" class="landing-button">
+      Start Managing Your Money →
+    </a>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="landing-footer">
+    <p>© 2026 SpendWise. Take control of your money.</p>
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script>
+    // Signed-in visitors go straight to the dashboard.
+    // Everyone else keeps the normal sign-up / log-in links.
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        if (typeof supabaseClient === "undefined" || !supabaseClient) return;
+
+        const { data, error } = await supabaseClient.auth.getUser();
+        if (error || !data || !data.user) return;
+
+        document.querySelectorAll("[data-auth-link]").forEach(link => {
+          link.href = "dashboard.html";
+
+          if (link.dataset.authLink === "login") {
+            link.textContent = "Dashboard";
+          }
+        });
+      } catch (error) {
+        console.error("Could not check the current session:", error);
+      }
+    });
+  </script>
+
+</body>
+</html>

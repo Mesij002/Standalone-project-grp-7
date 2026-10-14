@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#064e3b">
+  <title>SpendWise | Personal Expense Tracker</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+
+<script src="supabase-config.js" defer></script>
+
+<script src="dashboard-auth.js" defer></script>
+
+<script src="script.js" defer></script>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+  <div class="app-layout min-h-screen">
+
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="brand-logo">S</div>
+        <span>SpendWise</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+
+        <a href="#dashboard" class="nav-link active">
+          <span aria-hidden="true">▦</span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#spending" class="nav-link">
+          <span aria-hidden="true">▤</span>
+          <span>Spending</span>
+        </a>
+
+        <a href="#transactions" class="nav-link">
+          <span aria-hidden="true">↔</span>
+          <span>Transactions</span>
+        </a>
+
+        <a href="#budget" class="nav-link">
+          <span aria-hidden="true">◷</span>
+          <span>Budget</span>
+        </a>
+
+        <a href="#savings" class="nav-link">
+          <span aria-hidden="true">◎</span>
+          <span>Savings goals</span>
+        </a>
+
+      </nav>
+
+      <button type="button" id="logout-button" class="logout-button">
+        <span aria-hidden="true">⎋</span>
+        <span>Log out</span>
+      </button>
+    </aside>
+
+
+ 
+    <main class="main-content" id="dashboard">
+
+      
+      <header class="page-header">
+
+       <div>
+  <h1
+    class="text-3xl font-bold tracking-tight"
+    id="welcome-heading"
+  >
+    Welcome to SpendWise!
+  </h1>
+
+  <p class="mt-2 text-sm text-slate-500" id="welcome-subtitle">
+    Here's an overview of your money.
+  </p>
+</div>
+
+        <button
+          type="button"
+          id="open-transaction-button"
+          class="primary-button"
+          onclick="document.getElementById('transaction-form-section').scrollIntoView({behavior:'smooth'})"
+        >
+          + Add transaction
+        </button>
+
+      </header>
+
+
+      <section class="finance-summary" aria-label="Financial summary">
+
+        <!-- Total Income -->
+        <article class="summary-card">
+
+          <p class="text-sm text-slate-500">
+            Total income
+          </p>
+
+          <h2
+            id="total-income"
+            class="mt-4 text-2xl font-bold text-slate-900"
+          >
+            ₦0.00
+          </h2>
+
+          <p class="mt-2 text-sm text-emerald-600">
+            Money received
+          </p>
+
+        </article>
+
+
+        <!-- Total Expenses -->
+        <article class="summary-card">
+
+          <p class="text-sm text-slate-500">
+            Total expenses
+          </p>
+
+          <h2
+            id="total-expenses"
+            class="mt-4 text-2xl font-bold text-slate-900"
+          >
+            ₦0.00
+          </h2>
+
+          <p class="mt-2 text-sm text-rose-500">
+            Money spent
+          </p>
+
+        </article>
+
+
+        <!-- Current Balance -->
+        <article class="summary-card">
+
+          <p class="text-sm text-slate-500">
+            Current balance
+          </p>
+
+          <h2
+            id="current-balance"
+            class="mt-4 text-2xl font-bold text-emerald-700"
+          >
+            ₦0.00
+          </h2>
+
+          <p class="mt-2 text-sm text-slate-500">
+            Income minus expenses and savings allocated
+          </p>
+
+        </article>
+
+      </section>
+
+
+      <section
+        id="savings"
+        class="dashboard-card savings-section"
+      >
+
+        <!-- Savings Header -->
+        <div class="savings-header">
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">
+              My Savings Goals
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+              Create goals and allocate money to each one.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            id="add-goal-button"
+            class="primary-button"
+          >
+            + Create goal
+          </button>
+
+        </div>
+
+
+        <!-- Savings Goals List -->
+        <div
+          id="savings-goals-list"
+          class="savings-goals-list"
+        >
+
+          <p class="text-sm text-slate-500">
+            You haven't created any savings goals yet.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      
+      <section
+        id="transaction-form-section"
+        class="dashboard-card mt-6"
+      >
+
+        <div class="mb-6">
+          <h2 class="text-xl font-bold">
+            Add a transaction
+          </h2>
+
+          <p class="mt-1 text-sm text-slate-500">
+            Record the money you receive or spend.
+          </p>
+        </div>
+
+
+        <form id="transaction-form" class="space-y-5">
+
+          <!-- Transaction Type -->
+          <fieldset>
+            <legend class="form-label">
+              Transaction type
+            </legend>
+
+            <div class="grid grid-cols-2 gap-3">
+
+              <label class="type-option">
+                <input
+                  type="radio"
+                  name="type"
+                  value="income"
+                  class="accent-emerald-600"
+                >
+
+                <span>Income</span>
+              </label>
+
+              <label class="type-option">
+                <input
+                  type="radio"
+                  name="type"
+                  value="expense"
+                  checked
+                  class="accent-emerald-600"
+                >
+
+                <span>Expense</span>
+              </label>
+
+            </div>
+          </fieldset>
+
+
+          <!-- Description -->
+          <div>
+            <label
+              for="transaction-description"
+              class="form-label"
+            >
+              Description
+            </label>
+
+            <input
+              id="transaction-description"
+              name="description"
+              type="text"
+              class="form-input"
+              placeholder="e.g. Salary, groceries or transport"
+              maxlength="120"
+              required
+            >
+          </div>
+
+
+          <!-- Amount -->
+          <div>
+            <label
+              for="transaction-amount"
+              class="form-label"
+            >
+              Amount (₦)
+            </label>
+
+            <input
+              id="transaction-amount"
+              name="amount"
+              type="number"
+              class="form-input"
+              placeholder="Enter amount"
+              min="0.01"
+              step="0.01"
+              required
+            >
+          </div>
+
+
+          <!-- Category -->
+          <div>
+            <label
+              for="transaction-category"
+              class="form-label"
+            >
+              Category
+            </label>
+
+            <select
+              id="transaction-category"
+              name="category"
+              class="form-input"
+              required
+            >
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Health">Health</option>
+              <option value="Education">Education</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+
+          <!-- Date -->
+          <div>
+            <label
+              for="transaction-date"
+              class="form-label"
+            >
+              Date
+            </label>
+
+            <input
+              id="transaction-date"
+              name="date"
+              type="date"
+              class="form-input"
+              required
+            >
+          </div>
+
+
+          <!-- Form Message -->
+          <p
+            id="form-message"
+            class="text-sm"
+            role="status"
+            aria-live="polite"
+          ></p>
+
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="primary-button w-full"
+          >
+            Save transaction
+          </button>
+
+        </form>
+
+      </section>
+
+
+      <section id="spending" class="dashboard-card mt-6">
+
+        <div class="mb-6 flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold">Spending by category</h2>
+            <p class="mt-1 text-sm text-slate-500">
+              How your expenses are split. Follows the month filter below.
+            </p>
+          </div>
+
+          <span
+            id="category-spending-scope"
+            class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"
+          >All time</span>
+        </div>
+
+        <div id="category-spending-list" class="category-spending-list">
+          <p class="text-sm text-slate-500">
+            No expenses to show yet.
+          </p>
+        </div>
+
+      </section>
+
+
+      <section
+        id="transactions"
+        class="dashboard-card mt-6"
+      >
+
+        <div class="mb-6">
+          <h2 class="text-xl font-bold">
+            Recent transactions
+          </h2>
+
+          <p class="mt-1 text-sm text-slate-500">
+            View and manage your recorded transactions.
+          </p>
+        </div>
+
+
+        <!-- Search and Filters -->
+        <div class="transaction-filters mb-6">
+
+          <div>
+            <label
+              for="search-transactions"
+              class="form-label"
+            >
+              Search
+            </label>
+
+            <input
+              id="search-transactions"
+              type="search"
+              class="form-input"
+              placeholder="Search transactions..."
+            >
+          </div>
+
+
+          <div>
+            <label
+              for="category-filter"
+              class="form-label"
+            >
+              Category
+            </label>
+
+            <select
+              id="category-filter"
+              class="form-input"
+            >
+              <option value="all">All categories</option>
+            </select>
+          </div>
+
+
+          <div>
+            <label
+              for="month-filter"
+              class="form-label"
+            >
+              Month
+            </label>
+
+            <select
+              id="month-filter"
+              class="form-input"
+            >
+              <option value="all">All months</option>
+            </select>
+          </div>
+
+        </div>
+
+
+        <div class="filter-summary-row mb-4">
+          <div id="filter-summary" class="filter-summary" aria-live="polite"></div>
+
+          <button
+            type="button"
+            id="clear-filters-button"
+            class="clear-filters-button"
+            hidden
+          >
+            Clear filters
+          </button>
+        </div>
+
+
+        <!-- Transaction List -->
+        <div
+          id="transactions-list"
+          class="transactions-list"
+        >
+
+          <p class="py-8 text-center text-sm text-slate-500">
+            No transactions found.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <section id="budget" class="dashboard-card mt-6">
+
+  <div class="budget-header">
+    <div>
+      <h2 class="text-xl font-bold text-slate-900">Monthly Budget</h2>
+      <p class="mt-1 text-sm text-slate-500">
+        Set spending limits and track where your money goes.
+      </p>
+    </div>
+
+    <div class="budget-month-control">
+      <label for="budget-month" class="form-label">Select month</label>
+      <input id="budget-month" type="month" class="form-input" required>
+    </div>
+  </div>
+
+  <!-- Budget summary -->
+  <div class="budget-summary-grid">
+    <article class="budget-summary-card">
+      <p>Total budget</p>
+      <h3 id="budget-total-limit">₦0.00</h3>
+    </article>
+
+    <article class="budget-summary-card">
+      <p>Total spent</p>
+      <h3 id="budget-total-spent">₦0.00</h3>
+    </article>
+
+    <article class="budget-summary-card">
+      <p>Budget remaining</p>
+      <h3 id="budget-total-remaining">₦0.00</h3>
+    </article>
+  </div>
+
+  <!-- Create or update a category budget -->
+  <div class="budget-form-card">
+    <h3 class="font-bold text-slate-900">Set a category budget</h3>
+    <p class="mt-1 mb-4 text-sm text-slate-500">
+      Choose a category and enter your spending limit for the selected month.
+    </p>
+
+    <form id="budget-form" class="budget-form">
+
+      <div>
+        <label for="budget-category" class="form-label">Category</label>
+        <select id="budget-category" class="form-input" required>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Rent">Rent</option>
+          <option value="Bills">Bills</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Health">Health</option>
+          <option value="Education">Education</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="budget-limit" class="form-label">Limit (₦)</label>
+        <input
+          id="budget-limit"
+          type="number"
+          class="form-input"
+          min="0.01"
+          step="0.01"
+          placeholder="e.g. 80000"
+          required
+        >
+      </div>
+
+      <button type="submit" class="primary-button">
+        Save budget
+      </button>
+    </form>
+
+    <p id="budget-message" class="mt-3 text-sm"
+       role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- Category budget progress -->
+  <div class="mt-8">
+    <div class="mb-4">
+      <h3 class="text-lg font-bold text-slate-900">
+        Spending by category
+      </h3>
+      <p class="mt-1 text-sm text-slate-500">
+        Your spending updates automatically when you add or delete expenses.
+      </p>
+    </div>
+
+    <div id="budget-list" class="budget-list">
+      <p class="text-sm text-slate-500">
+        No budgets set for this month yet.
+      </p>
+    </div>
+  </div>
+
+</section>
+
+      <!-- Footer -->
+      <footer class="py-8 text-center text-sm text-slate-500">
+        SpendWise · Manage your money wisely.
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <div
+    id="goal-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 p-4"
+  >
+
+    <div
+      class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="goal-modal-title"
+    >
+
+      <!-- Modal Header -->
+      <div class="mb-6 flex items-start justify-between gap-4">
+
+        <div>
+          <h2
+            id="goal-modal-title"
+            class="text-xl font-bold text-slate-900"
+          >
+            Create savings goal
+          </h2>
+
+          <p
+            id="goal-modal-description"
+            class="mt-1 text-sm text-slate-500"
+          >
+            Give your savings goal a name and target.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          id="close-goal-modal"
+          class="rounded-lg px-3 py-2 text-slate-500 hover:bg-slate-100"
+          aria-label="Close dialog"
+        >
+          ✕
+        </button>
+
+      </div>
+
+
+      <!-- Goal Form -->
+      <form id="goal-form" class="space-y-4">
+
+        <!-- Goal Name -->
+        <div id="goal-name-field">
+
+          <label
+            for="goal-name-input"
+            class="form-label"
+          >
+            Goal name
+          </label>
+
+          <input
+            id="goal-name-input"
+            type="text"
+            class="form-input"
+            placeholder="e.g. New Laptop"
+            maxlength="60"
+            required
+          >
+
+        </div>
+
+
+        <!-- Target Amount -->
+        <div id="goal-target-field">
+
+          <label
+            for="goal-amount-input"
+            class="form-label"
+          >
+            Target amount (₦)
+          </label>
+
+          <input
+            id="goal-amount-input"
+            type="number"
+            class="form-input"
+            placeholder="e.g. 250000"
+            min="0.01"
+            step="0.01"
+            required
+          >
+
+        </div>
+
+
+        <!-- Funding Amount -->
+        <div id="fund-amount-field" class="hidden">
+
+          <label
+            for="fund-amount-input"
+            class="form-label"
+          >
+            Amount to allocate (₦)
+          </label>
+
+          <input
+            id="fund-amount-input"
+            type="number"
+            class="form-input"
+            placeholder="e.g. 5000"
+            min="0.01"
+            step="0.01"
+          >
+
+          <p
+            id="fund-balance-help"
+            class="mt-2 text-xs text-slate-500"
+          ></p>
+
+        </div>
+
+
+        <!-- Modal Message -->
+        <p
+          id="goal-message"
+          class="text-sm"
+          role="status"
+          aria-live="polite"
+        ></p>
+
+
+        <!-- Modal Actions -->
+        <div class="flex gap-3 pt-2">
+
+          <button
+            type="button"
+            id="cancel-goal"
+            class="flex-1 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700 hover:bg-slate-50"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            id="save-goal-button"
+            class="primary-button flex-1"
+          >
+            Create goal
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <div id="confirm-modal" class="confirm-overlay" hidden>
+  <div class="confirm-box" role="dialog" aria-modal="true"
+       aria-labelledby="confirm-title">
+    <h2 id="confirm-title">Are you sure?</h2>
+    <p id="confirm-message">Do you want to continue?</p>
+
+    <div class="confirm-actions">
+      <button type="button" id="confirm-cancel"
+              class="confirm-cancel">Cancel</button>
+      <button type="button" id="confirm-yes"
+              class="confirm-yes">Yes, continue</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
